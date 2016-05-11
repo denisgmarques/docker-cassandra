@@ -14,7 +14,6 @@ RUN apt-get update \
 RUN apt-get install cassandra -y --force-yes
 
 # configure cassandra
-# TODO: check why this is mandatory...
 RUN set -x \
     && sed -i 's/NAME=cassandra/NAME=cassandra\nUSER=cassandra/g' /etc/init.d/cassandra \
     && sed -i 's/-user cassandra/-user $USER/g' /etc/init.d/cassandra \
@@ -23,13 +22,6 @@ RUN set -x \
 # copy entrypoint script
 COPY ./entrypoint.sh /
 RUN chmod o+x ./entrypoint.sh
-
-# 7000: intra-node communication
-# 7001: TLS intra-node communication
-# 7199: JMX
-# 9042: CQL
-# 9160: thrift service
-EXPOSE 7000 7001 7199 9042 9160
 
 # set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
