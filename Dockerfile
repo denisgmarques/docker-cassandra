@@ -10,6 +10,10 @@ RUN gpg --export --armor F758CE318D77295D | apt-key add -
 RUN apt-get update \
     && apt-get upgrade -y
 
+RUN gpg --keyserver http://www.freedesktop.org/software/gstreamer-sdk/sdk.gpg --recv-keys 8D77295D
+
+RUN gpg --export --armor 1900C4BE|sudo apt-key add -
+
 # download cassandra (force yes because cassandra cannot be authenticated)
 RUN apt-get install cassandra -y --force-yes
 
