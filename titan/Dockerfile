@@ -2,12 +2,12 @@ FROM ubuntu:12.04
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install unzip
+RUN apt-get -y install unzip wget
 
 WORKDIR /app
 
-COPY titan.zip /app
-COPY server-jre-8u191-linux-x64.tar.gz /app
+RUN wget https://s3-sa-east-1.amazonaws.com/docker-images-artifacts/titan.zip --no-check-certificate
+RUN wget https://s3-sa-east-1.amazonaws.com/docker-images-artifacts/server-jre-8u191-linux-x64.tar.gz --no-check-certificate
 
 RUN unzip titan.zip
 RUN tar zxvf server-jre-8u191-linux-x64.tar.gz
